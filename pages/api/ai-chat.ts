@@ -10,10 +10,9 @@ const configuration = new Configuration({
 const openai = new OpenAI(configuration);
 
 interface Props {
-  data?: any;
   text?: string;
   error?: string;
-  is_not_done_typing?: boolean;
+  message?: string;
 }
 
 export default async function handler(
@@ -22,15 +21,13 @@ export default async function handler(
 ) {
   try {
     const messages: Message[] = deserialize(req.body);
-    console.log(messages);
     const response = await openai.createChatCompletion({
-      // messages: messages.map((msg) => {
-      //   return {
-      //     role: msg.role,
-      //     content: msg.text,
-      //   };
-      // }),
-      messages: [{ role: "system", content: "chat" }],
+      messages: messages.map((msg) => {
+        return {
+          role: msg.role,
+          content: msg.text,
+        };
+      }),
       model: OpenAIConfig.model,
       temperature: OpenAIConfig.temperature,
       max_tokens: OpenAIConfig.max_tokens,
@@ -38,12 +35,15 @@ export default async function handler(
     });
 
     if (response.status === 200) {
-      return res.status(200).json({ data: response.data });
+      return res.status(200).json({
+        text: response.data.choices[0]?.message?.content,
+      });
     } else {
       return res.status(500).json({ error: response.statusText });
     }
   } catch (error) {
-    return res.status(500).json({ error: "Something went wrong" });
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
   }
 }
 
