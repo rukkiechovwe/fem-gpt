@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uniqueId } from "uuid";
 import { Message, OpenAIConfig, OpenAIRole } from "@/types";
 import styles from "@/styles/chat.module.css";
+import Header from "@/components/Header";
 
 const initialPrompt: Message[] = [
   {
@@ -17,6 +18,7 @@ const initialPrompt: Message[] = [
 ];
 
 export default function Chat() {
+  const bottomRef = useRef(null);
   const [conversation, setConversation] = useState<Message[]>([]);
   const [userMessage, setUserMessage] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -41,8 +43,6 @@ export default function Chat() {
       const json = await response.json();
 
       if (response.ok) {
-        console.log(json);
-
         setConversation(
           latestConversation.map((msg) => {
             if (msg.id === msgId) {
@@ -53,13 +53,14 @@ export default function Chat() {
             return msg;
           })
         );
+        if (json.is_not_done_typing) {
+          askFemGPT(latestConversation);
+        }
       } else {
-        console.log(json);
         setError(json.error ?? "Something went wrong");
       }
     } catch (e: any) {
-      console.log(e);
-      setError(e.message ?? "Something went wrong");
+      setError(e.error ?? "Something went wrong");
     }
   };
 
@@ -85,7 +86,20 @@ export default function Chat() {
     await askFemGPT(latestConversation);
   };
 
-  useMemo(() => askFemGPT(initialPrompt), []);
+  const scrollToBottom = () => {
+    if (bottomRef.current) {
+      // @ts-ignore
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    askFemGPT(initialPrompt);
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
 
   if (error.length != 0)
     return (
@@ -102,44 +116,49 @@ export default function Chat() {
     );
 
   return (
-    <div className="relative min-h-screen p-4 max-w-lg mx-auto">
-      <div className="flex flex-col">
-        {conversation.slice(2).map((msg, key) => (
-          <div
-            className={`mb-2 ${
-              msg.role === "system" || msg.role === "assistant"
-                ? styles.system
-                : styles.user
-            }`}
-            key={key}
-          >
-            {msg.text.split("\n").map((item, index) => (
-              <p className="mb-2" key={index}>
-                {item}
-              </p>
-            ))}
-          </div>
-        ))}
-      </div>
+    <>
+      <Header />
+      <div className="relative min-h-screen p-4 max-w-lg mx-auto mt-20">
+        <div className="flex flex-col mb-16">
+          {conversation.slice(2).map((msg, key) => (
+            <div
+              ref={key > 2 ? bottomRef : null}
+              className={`mb-4 ${
+                msg.role === "system" || msg.role === "assistant"
+                  ? styles.system
+                  : styles.user
+              }`}
+              key={key}
+            >
+              {msg.text.split("\n").map((item, index) => (
+                <p className="mb-2" key={index}>
+                  {item}
+                </p>
+              ))}
+            </div>
+          ))}
+        </div>
 
-      {/* type message */}
-      <div className={styles.type_message}>
-        <input
-          value={userMessage}
-          onChange={handleType}
-          onKeyDown={handleKeyDown}
-          type="text"
-          placeholder="Write a reply"
-          className=""
-        />
-        <button
-          onClick={() =>
-            sendMessage(userMessage).then((_) => setUserMessage(""))
-          }
-        >
-          Send
-        </button>
+        {/* type message */}
+        <div className={styles.type_message}>
+          <div>
+            <input
+              value={userMessage}
+              onChange={handleType}
+              onKeyDown={handleKeyDown}
+              type="text"
+              placeholder="Write a reply"
+            />
+            <button
+              onClick={() =>
+                sendMessage(userMessage).then((_) => setUserMessage(""))
+              }
+            >
+              Send
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

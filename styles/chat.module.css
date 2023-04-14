@@ -1,3 +1,8 @@
+.header{
+  @apply text-center bg-white fixed top-0 left-0 w-full p-4 z-10 shadow;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
 .system {
   padding: 10px;
   border-radius: 8px 8px 8px 0;
@@ -23,10 +28,18 @@
 }
 
 .type_message {
-  @apply absolute bottom-0 w-full right-0 h-12 flex items-center justify-between mb-4;
+  @apply fixed bottom-0 w-full max-w-lg mx-auto;
+  /* padding: 10px; */
+  /* border-radius: 8px; */
+  background: #fdf4f5;
+}
+
+.type_message div {
+  @apply w-full h-12 flex items-center justify-between mb-4;
   padding: 10px;
   border-radius: 8px;
   background: #fff;
+  margin-top: 10px;
 }
 
 .type_message input,
@@ -39,7 +52,6 @@
 .type_message input {
   background: transparent;
   height: 100%;
-
   width: 100%;
 }
 
@@ -53,10 +65,14 @@
   padding: 2px 6px;
   font-size: 13px;
   color: #fff;
+  margin-left: 10px;
 }
 
 @media screen and (max-width: 512px) {
-  .type_message {
+  .type_message{
+    left: 0;
+  }
+  .type_message div {
     border-top: 1px solid #cfcfcf;
     border-radius: 0;
     background: transparent;

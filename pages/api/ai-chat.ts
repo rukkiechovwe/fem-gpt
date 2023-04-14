@@ -12,7 +12,7 @@ const openai = new OpenAI(configuration);
 interface Props {
   text?: string;
   error?: string;
-  message?: string;
+  is_not_done_typing?: boolean;
 }
 
 export default async function handler(
@@ -20,11 +20,6 @@ export default async function handler(
   res: NextApiResponse<Props>
 ) {
   try {
-
-    
-
-
-
     const messages: Message[] = deserialize(req.body);
     const response = await openai.createChatCompletion({
       messages: messages.map((msg) => {
@@ -40,17 +35,16 @@ export default async function handler(
     });
 
     if (response.status === 200) {
-      
-
       return res.status(200).json({
         text: response.data.choices[0]?.message?.content,
+        is_not_done_typing: response.data.choices[0].finish_reason !== "stop",
       });
     } else {
       return res.status(500).json({ error: response.statusText });
     }
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Something went wrong" });
+    // console.log(error);
+    return res.status(500).json({ error: "Something went wrong" });
   }
 }
 

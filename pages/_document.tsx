@@ -4,11 +4,11 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* <title>FemGPT</title> */}
+        <title>FemGPT – Female Health Advisor</title>
         <meta name="robots" content="follow, index" />
-        {/* <link href="/assets/icon.png" rel="shortcut icon" /> */}
+        <link href="/favicon.png" rel="shortcut icon" />
         <meta content="Female AI health advisor" name="description" />
-        {/* <meta property="og:url" content="https://dele-gpt.vercel.app/" /> */}
+        <meta property="og:url" content="https://fem-gpt.vercel.app/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="FemGPT" />
         <meta property="og:description" content="Female AI health advisor" />
