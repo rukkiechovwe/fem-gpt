@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { v4 as uniqueId } from "uuid";
 import { Message, OpenAIConfig, OpenAIRole } from "@/types";
+import styles from "@/styles/chat.module.css";
 
 const initialPrompt: Message[] = [
   {
@@ -84,23 +85,15 @@ export default function Chat() {
     await askFemGPT(latestConversation);
   };
 
-  useEffect(() => {
-    askFemGPT(initialPrompt);
-  }, []);
+  useMemo(() => askFemGPT(initialPrompt), []);
 
   if (error.length != 0)
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h1 className="text-2xl text-red-500">{error}</h1>
+      <div className="h-screen w-screen flex flex-col items-center justify-center">
+        <h1 className="text-2xl sm:text-3xl font-medium">{error}</h1>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+          className="bg-primary text-white font-sm px-3 py-1.5 rounded mt-8"
+          style={{ background: "#be6db7" }}
           onClick={() => window.location.reload()}
         >
           Reload
@@ -109,10 +102,17 @@ export default function Chat() {
     );
 
   return (
-    <div>
-      <div>
+    <div className="relative min-h-screen p-4 max-w-lg mx-auto">
+      <div className="flex flex-col">
         {conversation.slice(2).map((msg, key) => (
-          <div key={key}>
+          <div
+            className={`mb-2 ${
+              msg.role === "system" || msg.role === "assistant"
+                ? styles.system
+                : styles.user
+            }`}
+            key={key}
+          >
             {msg.text.split("\n").map((item, index) => (
               <p className="mb-2" key={index}>
                 {item}
@@ -123,7 +123,7 @@ export default function Chat() {
       </div>
 
       {/* type message */}
-      <div>
+      <div className={styles.type_message}>
         <input
           value={userMessage}
           onChange={handleType}

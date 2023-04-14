@@ -20,6 +20,11 @@ export default async function handler(
   res: NextApiResponse<Props>
 ) {
   try {
+
+    
+
+
+
     const messages: Message[] = deserialize(req.body);
     const response = await openai.createChatCompletion({
       messages: messages.map((msg) => {
@@ -35,6 +40,8 @@ export default async function handler(
     });
 
     if (response.status === 200) {
+      
+
       return res.status(200).json({
         text: response.data.choices[0]?.message?.content,
       });
