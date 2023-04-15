@@ -4,9 +4,10 @@
 }
 
 .chat{
-  @apply relative p-4 max-w-lg mx-auto;
+  @apply relative max-w-lg mx-auto;
   margin-top: 4.5rem;
-      min-height: calc(100vh - 82px);
+    overflow: hidden;
+      height: calc(100vh - 134px);
 }
 
 .system {

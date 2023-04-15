@@ -120,7 +120,7 @@ export default function Chat() {
     <>
       <Header />
       <div className={styles.chat}>
-        <div className="flex flex-col mb-16">
+        <div className="flex flex-col my-2 p-4 overflow-auto h-full scroll">
           {conversation.slice(2).map((msg, key) => (
             <div
               ref={key > 2 ? bottomRef : null}

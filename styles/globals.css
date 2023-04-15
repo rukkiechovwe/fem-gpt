@@ -19,7 +19,35 @@ body {
   font-size: 15px;
   font-family: "Uncut Sans", sans-serif;
   font-weight: 400;
+  overflow: hidden;
 }
 #__next{
   overflow-x: hidden;
+}
+
+
+.scroll {
+  overflow-y: auto;
+  scrollbar-color: #888 #eae2e3;
+  scrollbar-width: thin;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scroll::-webkit-scrollbar-track {
+  background: #eae2e3;
+}
+
+/* Handle */
+.scroll::-webkit-scrollbar-thumb {
+    background: #888;
+      border-radius: 5px;
+}
+
+/* Handle on hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
