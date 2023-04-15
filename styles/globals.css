@@ -20,3 +20,6 @@ body {
   font-family: "Uncut Sans", sans-serif;
   font-weight: 400;
 }
+#__next{
+  overflow-x: hidden;
+}

@@ -119,7 +119,7 @@ export default function Chat() {
   return (
     <>
       <Header />
-      <div className="relative min-h-screen p-4 max-w-lg mx-auto mt-20">
+      <div className={styles.chat}>
         <div className="flex flex-col mb-16">
           {conversation.slice(2).map((msg, key) => (
             <div
@@ -132,7 +132,7 @@ export default function Chat() {
               key={key}
             >
               {msg.text.split("\n").map((item, index) => (
-                <p className="mb-2" key={index}>
+                <p className="mb-2 text-sm sm:text-base" key={index}>
                   {item}
                 </p>
               ))}
