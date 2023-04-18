@@ -117,50 +117,46 @@ export default function Chat() {
     );
 
   return (
-    <>
+    <div className={styles.chat}>
       <Header />
-      <div className={styles.chat}>
-        {/* <div className="flex flex-col my-2 p-4 overflow-auto h-full scroll"> */}
-        <div className="flex flex-col mt-2 p-4 gap-3">
-          {conversation.slice(2).map((msg, key) => (
-            <div
-              ref={key > 2 ? bottomRef : null}
-              className={
-                msg.role === "system" || msg.role === "assistant"
-                  ? styles.system
-                  : styles.user
-              }
-              key={key}
-            >
-              {msg.text.split("\n").map((item, index) => (
-                <p className="mb-2 text-sm sm:text-base" key={index}>
-                  {item}
-                </p>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        {/* type message */}
-        <div className={styles.type_message}>
-          <div>
-            <input
-              value={userMessage}
-              onChange={handleType}
-              onKeyDown={handleKeyDown}
-              type="text"
-              placeholder="Write a reply"
-            />
-            <button
-              onClick={() =>
-                sendMessage(userMessage).then((_) => setUserMessage(""))
-              }
-            >
-              Send
-            </button>
+      {/* <div className="flex flex-col my-2 p-4 overflow-auto h-full scroll"> */}
+      <div className="flex flex-col p-4 gap-3">
+        {conversation.slice(2).map((msg, key) => (
+          <div
+            ref={key > 2 ? bottomRef : null}
+            className={
+              msg.role === "system" || msg.role === "assistant"
+                ? styles.system
+                : styles.user
+            }
+            key={key}
+          >
+            {msg.text.split("\n").map((item, index) => (
+              <p className="mb-2 text-sm " key={index}>
+                {item}
+              </p>
+            ))}
           </div>
+        ))}
+      </div>
+      <div className={styles.type_message}>
+        <div>
+          <input
+            value={userMessage}
+            onChange={handleType}
+            onKeyDown={handleKeyDown}
+            type="text"
+            placeholder="Write a reply"
+          />
+          <button
+            onClick={() =>
+              sendMessage(userMessage).then((_) => setUserMessage(""))
+            }
+          >
+            Send
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

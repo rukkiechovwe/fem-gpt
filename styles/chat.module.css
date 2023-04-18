@@ -6,8 +6,7 @@
 .chat{
   @apply relative max-w-lg mx-auto;
   margin-top: 4.5rem;
-    /* overflow: hidden; */
-      height: calc(100vh - 134px);
+      /* height: calc(100vh - 134px); */
 }
 
 .system {
