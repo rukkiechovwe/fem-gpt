@@ -19,7 +19,7 @@ body {
   font-size: 15px;
   font-family: "Uncut Sans", sans-serif;
   font-weight: 400;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 #__next{
   overflow-x: hidden;

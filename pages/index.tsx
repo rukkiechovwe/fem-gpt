@@ -8,7 +8,7 @@ const initialPrompt: Message[] = [
   {
     id: uniqueId(),
     role: OpenAIRole.system,
-    text: "You're FemGPT, A female health advisor, I give reliable information about a woman's physical and emotional well-being.",
+    text: "You're FemGPT, A female health advisor. Please only provide answers related to female health",
   },
   {
     id: uniqueId(),
@@ -120,15 +120,16 @@ export default function Chat() {
     <>
       <Header />
       <div className={styles.chat}>
-        <div className="flex flex-col my-2 p-4 overflow-auto h-full scroll">
+        {/* <div className="flex flex-col my-2 p-4 overflow-auto h-full scroll"> */}
+        <div className="flex flex-col mt-2 p-4 gap-3">
           {conversation.slice(2).map((msg, key) => (
             <div
               ref={key > 2 ? bottomRef : null}
-              className={`mb-4 ${
+              className={
                 msg.role === "system" || msg.role === "assistant"
                   ? styles.system
                   : styles.user
-              }`}
+              }
               key={key}
             >
               {msg.text.split("\n").map((item, index) => (

@@ -6,7 +6,7 @@
 .chat{
   @apply relative max-w-lg mx-auto;
   margin-top: 4.5rem;
-    overflow: hidden;
+    /* overflow: hidden; */
       height: calc(100vh - 134px);
 }
 
@@ -35,18 +35,15 @@
 }
 
 .type_message {
-  @apply fixed bottom-0 w-full max-w-lg mx-auto;
-  /* padding: 10px; */
-  /* border-radius: 8px; */
-  background: #fdf4f5;
+  @apply fixed bottom-0 left-0 w-full;
 }
 
 .type_message div {
-  @apply w-full h-12 flex items-center justify-between mb-4;
+  @apply w-full h-12 flex items-center justify-between mb-4 max-w-lg mx-auto;
   padding: 10px;
   border-radius: 8px;
   background: #fff;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .type_message input,
@@ -82,6 +79,6 @@
   .type_message div {
     border-top: 1px solid #cfcfcf;
     border-radius: 0;
-    background: transparent;
+    background: #fdf4f5;
   }
 }
