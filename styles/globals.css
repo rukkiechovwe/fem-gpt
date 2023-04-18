@@ -11,7 +11,7 @@
 @font-face {
   font-family: "Uncut Sans";
   font-weight: 400;
-  src: url("/assets/font/Uncut-Sans-Regular.otf");
+  src: url("/assets/font/Uncut-Sans-Variable.ttf");
 }
 
 body {
@@ -21,10 +21,6 @@ body {
   font-weight: 400;
   overflow-x: hidden;
 }
-#__next{
-  overflow-x: hidden;
-}
-
 
 .scroll {
   overflow-y: auto;

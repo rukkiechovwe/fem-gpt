@@ -4,9 +4,8 @@
 }
 
 .chat{
-  @apply relative max-w-lg mx-auto;
+  @apply relative max-w-lg w-full mx-auto;
   margin-top: 4.5rem;
-      /* height: calc(100vh - 134px); */
 }
 
 .system {
@@ -18,6 +17,7 @@
   color: #fff;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
+
 .user {
   background: #fff;
   padding: 10px;
