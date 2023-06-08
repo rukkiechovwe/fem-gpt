@@ -1,7 +1,7 @@
 
 # FemGPT
 
-An Female Health Advisor 
+A Female Health Advisor 
 
 [Preview Demo](https://fem-gpt.vercel.app/)
 
