@@ -1,11 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+# FemGPT
+
+An Female Health Advisor 
+
+[Preview Demo](https://fem-gpt.vercel.app/)
+
 
 ## Getting Started
 
-
-- First add your OpenAI API key in the .env file using the .env.example file.
-- Edit the initialPrompt variable in index.tsx file.
-- Then run the development server:
+- Clone this repository
+- Add your OpenAI API key in the .env file as in the .env.example file
+- Update `initialPrompt` variable in index.tsx file to your liking
+- Run the development server:
 
 ```bash
 npm run dev
