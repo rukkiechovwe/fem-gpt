@@ -1,47 +1,30 @@
-import {
-  ReactNode,
-  createContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
-import { v4 as uniqueId } from "uuid";
-import { Message, OpenAIRole } from "@/types";
-
-const initialPrompt: Message[] = [
-  {
-    id: uniqueId(),
-    role: OpenAIRole.system,
-    text: "You're FemGPT, A female health advisor. Please only provide answers related to female health",
-  },
-  {
-    id: uniqueId(),
-    role: OpenAIRole.user,
-    text: "Introduce yourself briefly",
-  },
-];
+import { ReactNode, createContext, useReducer, Dispatch } from "react";
+import { Message } from "@/types";
 
 const initialState = {
-  conversations: initialPrompt,
+  conversations: [],
 };
-
-const ConversationContext = createContext({
-  conversations: initialPrompt,
-});
 
 const HANDLERS = {
   CHAT: "CHAT",
 } as const;
 
 type ActionPayload = {
-  conversations?: Message[];
+  conversations: Message[];
 };
 
 type Action = {
   type: keyof typeof HANDLERS;
   payload: ActionPayload;
 };
+
+const ConversationContext = createContext<{
+  conversations: Message[];
+  dispatch: Dispatch<Action>;
+}>({
+  conversations: [],
+  dispatch: () => null,
+});
 
 const reducer = (state: any, action: Action) => {
   const { conversations } = action.payload;
@@ -65,7 +48,7 @@ const ConversationProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ConversationContext.Provider
       value={{
-        ...state,
+        conversations: state.conversations,
         dispatch,
       }}
     >
