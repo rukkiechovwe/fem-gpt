@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
+/* @font-face {
   font-family: "Uncut Sans";
   font-weight: 500;
   src: url("/assets/font/Uncut-Sans-Medium.otf");
-}
+} */
 
 @font-face {
   font-family: "Uncut Sans";
-  font-weight: 400;
+  /* font-weight: 400; */
   src: url("/assets/font/Uncut-Sans-Variable.ttf");
+}
+
+html{
+    overflow-x: hidden;
 }
 
 body {
@@ -19,7 +23,6 @@ body {
   font-size: 15px;
   font-family: "Uncut Sans", sans-serif;
   font-weight: 400;
-  overflow-x: hidden;
 }
 
 .scroll {
