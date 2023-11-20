@@ -1,0 +1,20 @@
+.button {
+  @apply text-white text-sm font-medium px-3 py-2 rounded mt-8;
+  background-color: #be6db7;
+}
+
+.google,
+.facebook {
+  @apply text-sm font-medium px-3 py-2 rounded mt-8 flex items-center justify-center gap-2;
+  border-radius: 5px;
+}
+
+.google {
+  background-color: transparent;
+  border: 1px solid #dedede;
+}
+
+.facebook {
+  @apply text-white mt-4;
+  background-color: #1877f2;
+}

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import styles from "@/styles/chat.module.css";
+import styles from "@/styles/header.module.css";
 import useFemGPT from "@/utils/useFemGPT";
+import useAuth from "@/utils/useAuth";
 
 const Header = () => {
   const { clearConversation } = useFemGPT();
+  const { logout } = useAuth();
   const [openPopup, setOpenPopup] = useState<boolean>(false);
 
   return (
@@ -34,6 +36,7 @@ const Header = () => {
             }}
           >
             <li onClick={clearConversation}>Clear conversations</li>
+            <li onClick={logout}>Logout</li>
           </ul>
         </>
       )}

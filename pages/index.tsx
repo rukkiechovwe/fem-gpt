@@ -2,8 +2,9 @@ import { useState } from "react";
 import styles from "@/styles/chat.module.css";
 import Header from "@/components/Header";
 import useFemGPT from "@/utils/useFemGPT";
+import ErrorScreen from "@/components/ErrorScreen";
 
-export default function Chat() {
+const Chat = () => {
   const { sendMessage, conversations, error, bottomRef } = useFemGPT();
   const [userMessage, setUserMessage] = useState<string>("");
 
@@ -15,19 +16,7 @@ export default function Chat() {
       sendMessage(userMessage).then((_) => setUserMessage(""));
   };
 
-  if (error.length != 0)
-    return (
-      <div className="h-screen w-screen flex flex-col items-center justify-center">
-        <h1 className="text-2xl sm:text-3xl font-medium">{error}</h1>
-        <button
-          className="bg-primary text-white font-sm px-3 py-1.5 rounded mt-8"
-          style={{ background: "#be6db7" }}
-          onClick={() => window.location.reload()}
-        >
-          Reload
-        </button>
-      </div>
-    );
+  if (error.length != 0) return <ErrorScreen error={error} />;
 
   return (
     <div className={styles.chat}>
@@ -72,4 +61,6 @@ export default function Chat() {
       </div>
     </div>
   );
-}
+};
+
+export default Chat;

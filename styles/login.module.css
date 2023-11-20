@@ -1,0 +1,37 @@
+.login {
+  @apply max-w-sm min-h-screen mx-auto w-full flex flex-col justify-center items-center text-center;
+}
+
+.login_box {
+  background-color: #fff;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  padding: 20px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.login_title {
+  @apply text-xl font-bold;
+}
+
+.divider {
+  @apply mt-8 relative;
+}
+
+.divider::after,
+.divider::before {
+  content: "";
+  @apply absolute w-8;
+  height: 1px;
+  width: 32%;
+  top: 50%;
+  background-color: #dedede;
+}
+
+.divider::after {
+  right: 0;
+}
+.divider::before {
+  left: 0;
+}
