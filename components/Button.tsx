@@ -1,7 +1,7 @@
 import React from "react";
 import btn_styles from "@/styles/button.module.css";
 
-function Button({
+function PrimaryButton({
   onClick,
   children,
   className,
@@ -20,7 +20,7 @@ function Button({
   );
 }
 
-function OtherButton({
+function SignInWithButton({
   onClick,
   children,
   className,
@@ -44,4 +44,4 @@ function ReloadButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-export { Button, ReloadButton, OtherButton };
+export { PrimaryButton, ReloadButton, SignInWithButton };
