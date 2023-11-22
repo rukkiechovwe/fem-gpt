@@ -2,6 +2,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 import {
   signInAnonymously,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -13,6 +14,7 @@ interface InistialStateProps {
   error: string;
   guestLogin: () => void;
   googleSignIn: () => void;
+  facebookLogin: () => void;
   logout: () => void;
   isAuthenticated?: boolean | null;
 }
@@ -23,6 +25,7 @@ const initialState = {
   error: "",
   guestLogin: () => {},
   googleSignIn: () => {},
+  facebookLogin: () => {},
   logout: () => {},
   isAuthenticated: null,
 };
@@ -113,6 +116,21 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       });
   };
 
+  const facebookLogin = () => {
+    const provider = new FacebookAuthProvider();
+    signInWithPopup(firebaseAuth, provider)
+      .then((res) => {
+        console.log(res.user);
+        const userdata = res.user as any;
+        updateUserData(userdata);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error.code, error.message);
+        setError(error.message);
+      });
+  };
+
   const logout = () => {
     console.log("loging out...");
 
@@ -134,6 +152,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         user,
         guestLogin,
         googleSignIn,
+        facebookLogin,
         loading,
         error,
         isAuthenticated,

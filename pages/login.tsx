@@ -6,7 +6,7 @@ import { PrimaryButton, SignInWithButton } from "@/components/Button";
 import Image from "next/image";
 
 function Login() {
-  const { guestLogin, googleSignIn } = useAuth();
+  const { guestLogin, googleSignIn, facebookLogin } = useAuth();
   return (
     <div className={styles.login}>
       <h4 className="logo">FemGPT</h4>
@@ -28,7 +28,10 @@ function Login() {
           />
           <span>Google</span>
         </SignInWithButton>
-        <SignInWithButton onClick={() => {}} className={btn_styles.facebook}>
+        <SignInWithButton
+          onClick={() => facebookLogin()}
+          className={btn_styles.facebook}
+        >
           <Image
             src="assets/icon/facebook-50.svg"
             alt="google"
