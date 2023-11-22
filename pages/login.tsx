@@ -6,7 +6,7 @@ import { Button, OtherButton } from "@/components/Button";
 import Image from "next/image";
 
 function Login() {
-  const { guestLogin } = useAuth();
+  const { guestLogin, googleSignIn } = useAuth();
   return (
     <div className={styles.login}>
       <h4 className="logo">FemGPT</h4>
@@ -14,7 +14,7 @@ function Login() {
         <h1 className={styles.login_title}>Login</h1>
         <Button onClick={() => guestLogin()}>Guest Signin</Button>
         <p className={styles.divider}>or sign in with:</p>
-        <OtherButton onClick={() => {}} className={btn_styles.google}>
+        <OtherButton onClick={() => googleSignIn()} className={btn_styles.google}>
           <Image
             src="assets/icon/google-48.svg"
             alt="google"

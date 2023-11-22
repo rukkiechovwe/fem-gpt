@@ -1,5 +1,10 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { signInAnonymously, signOut } from "firebase/auth";
+import {
+  signInAnonymously,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import { firebaseAuth } from "@/utils/firebase";
 
 interface InistialStateProps {
@@ -7,6 +12,7 @@ interface InistialStateProps {
   loading: boolean;
   error: string;
   guestLogin: () => void;
+  googleSignIn: () => void;
   logout: () => void;
   isAuthenticated?: boolean | null;
 }
@@ -16,6 +22,7 @@ const initialState = {
   loading: false,
   error: "",
   guestLogin: () => {},
+  googleSignIn: () => {},
   logout: () => {},
   isAuthenticated: null,
 };
@@ -47,27 +54,59 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   }, []);
 
+  const updateUserData = (user: any) => {
+    setUser({
+      expirationTime: user.stsTokenManager.expirationTime as number,
+      refreshToken: user.stsTokenManager.refreshToken,
+      metadata: user.metadata,
+      isAnonymous: user.isAnonymous,
+      accessToken: user.accessToken,
+      id: user.uid,
+    });
+
+    localStorage.setItem("userToken", user.accessToken);
+    setIsAuthenticated(true);
+    setLoading(false);
+  };
+
   const guestLogin = () => {
     setLoading(true);
     signInAnonymously(firebaseAuth)
       .then((res) => {
-        // console.log(res.user);
+        console.log(res.user);
         const userdata = res.user as any;
-        setUser({
-          expirationTime: userdata.stsTokenManager.expirationTime as number,
-          refreshToken: userdata.stsTokenManager.refreshToken,
-          metadata: res.user.metadata,
-          isAnonymous: res.user.isAnonymous,
-          accessToken: userdata.accessToken,
-        });
-
-        localStorage.setItem("userToken", userdata.accessToken);
-        setIsAuthenticated(true);
-
-        setLoading(false);
+        updateUserData(userdata);
         // router.push("/");
       })
       .catch((error) => {
+        setLoading(false);
+        console.log(error.code, error.message);
+        setError(error.message);
+      });
+  };
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    setLoading(true);
+
+    signInWithPopup(firebaseAuth, provider)
+      .then((res) => {
+        // // This gives you a Google Access Token. You can use it to access the Google API.
+        // const credential = GoogleAuthProvider.credentialFromResult(res);
+        // const token = credential?.accessToken;
+        // // IdP data available using getAdditionalUserInfo(res)
+        // console.log(token);
+
+        console.log(res.user);
+        const userdata = res.user as any;
+        updateUserData(userdata);
+      })
+      .catch((error) => {
+        // const email = error.customData.email;
+        // // The AuthCredential type that was used.
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        // console.log(email, credential);
+
         setLoading(false);
         console.log(error.code, error.message);
         setError(error.message);
@@ -91,7 +130,15 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, guestLogin, loading, error, isAuthenticated, logout }}
+      value={{
+        user,
+        guestLogin,
+        googleSignIn,
+        loading,
+        error,
+        isAuthenticated,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
